@@ -29,7 +29,9 @@
       "mcp__playwright__browser_evaluate",
       "Bash(git add:*)",
       "Bash(git commit:*)",
-      "mcp__playwright__browser_fill_form"
+      "mcp__playwright__browser_fill_form",
+      "Bash(git push:*)",
+      "Bash(git remote add:*)"
     ],
     "deny": [],
     "ask": []

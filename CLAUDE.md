@@ -183,6 +183,62 @@ cp .env.example .env
 - `style`: 格式调整
 - `refactor`: 重构
 - `test`: 测试
+- `chore`: 构建/工具
+
+## Git 开发工作流程
+
+### 分支策略
+
+**Git Flow（适合传统项目）**
+- `master` - 生产环境代码
+- `develop` - 开发主分支
+- `feature/*` - 功能开发分支
+- `hotfix/*` - 紧急修复分支
+- `release/*` - 发布准备分支
+
+**GitHub Flow（适合持续部署）**
+- `main` - 生产环境
+- `feature/*` - 功能分支，直接合并到 main
+
+### 日常操作
+
+```bash
+# 创建功能分支
+git checkout -b feature/new-feature
+
+# 频繁提交，原子化变更
+git add .
+git commit -m "feat: add user authentication"
+
+# 保持分支更新
+git fetch origin
+git rebase origin/main
+
+# 创建 Pull Request
+# 代码审查后合并
+```
+
+### 提交规范
+
+```
+类型(范围): 简短描述
+
+feat: 新功能
+fix: 修复问题
+docs: 文档更新
+style: 代码格式
+refactor: 重构
+test: 测试
+chore: 构建/工具
+```
+
+### 核心原则
+
+1. **主分支保护** - main/master 分支只接受 PR
+2. **原子化提交** - 每个提交只做一件事
+3. **频繁同步** - 定期 rebase 远程分支
+4. **代码审查** - 所有变更都需要 PR
+5. **自动化检查** - CI/CD 自动测试和构建
 
 ## 默认配置
 
