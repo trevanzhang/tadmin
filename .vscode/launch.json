@@ -1,0 +1,97 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "FastAPI: 调试主应用",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/backend/app/main.py",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "python": "${workspaceFolder}/backend/.venv/Scripts/python.exe",
+            "cwd": "${workspaceFolder}/backend",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}/backend"
+            },
+            "args": []
+        },
+        {
+            "name": "FastAPI: 使用uvicorn运行",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/backend/.venv/Scripts/uvicorn.exe",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "python": "${workspaceFolder}/backend/.venv/Scripts/python.exe",
+            "cwd": "${workspaceFolder}/backend",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}/backend"
+            },
+            "args": [
+                "app.main:app",
+                "--reload",
+                "--host",
+                "0.0.0.0",
+                "--port",
+                "8000"
+            ]
+        },
+        {
+            "name": "FastAPI: 预启动脚本",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/backend/scripts/prestart.sh",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "python": "${workspaceFolder}/backend/.venv/Scripts/python.exe",
+            "cwd": "${workspaceFolder}/backend",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}/backend"
+            }
+        },
+        {
+            "name": "FastAPI: 数据库迁移",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/backend/.venv/Scripts/alembic.exe",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "python": "${workspaceFolder}/backend/.venv/Scripts/python.exe",
+            "cwd": "${workspaceFolder}/backend",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}/backend"
+            },
+            "args": [
+                "upgrade",
+                "head"
+            ]
+        },
+        {
+            "name": "FastAPI: 运行测试",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/backend/.venv/Scripts/pytest.exe",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "python": "${workspaceFolder}/backend/.venv/Scripts/python.exe",
+            "cwd": "${workspaceFolder}/backend",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}/backend"
+            },
+            "args": []
+        },
+        {
+            "name": "FastAPI: 初始化数据",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/backend/app/initial_data.py",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "python": "${workspaceFolder}/backend/.venv/Scripts/python.exe",
+            "cwd": "${workspaceFolder}/backend",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}/backend"
+            }
+        }
+    ]
+}

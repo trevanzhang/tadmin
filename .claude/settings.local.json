@@ -1,0 +1,34 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cat:*)",
+      "Bash(mkdir:*)",
+      "Bash(uv sync:*)",
+      "Bash(uv run python:*)",
+      "Bash(uv run alembic revision:*)",
+      "Bash(uv run alembic:*)",
+      "Bash(timeout 10s uv run uvicorn:*)",
+      "Bash(curl:*)",
+      "Bash(timeout:*)",
+      "Bash(findstr:*)",
+      "Bash(tasklist:*)",
+      "Bash(uv run uvicorn:*)",
+      "Bash(python:*)",
+      "Bash(pnpm dev)",
+      "Bash(pnpm install)",
+      "Bash(find:*)",
+      "Bash(uv run mypy:*)",
+      "Bash(pnpm add:*)",
+      "Bash(npx playwright install:*)",
+      "mcp__playwright__browser_navigate",
+      "mcp__playwright__browser_snapshot",
+      "mcp__playwright__browser_click",
+      "mcp__playwright__browser_network_requests",
+      "mcp__playwright__browser_console_messages",
+      "mcp__playwright__browser_wait_for",
+      "mcp__playwright__browser_evaluate"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

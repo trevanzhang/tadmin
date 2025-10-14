@@ -1,0 +1,108 @@
+# 操作系统生成的文件
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE 和编辑器文件
+#.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 前端依赖和构建产物
+node_modules/
+frontend/node_modules/
+frontend/dist/
+frontend/dist-ssr/
+frontend/.temp
+frontend/.cache
+frontend/.eslintcache
+frontend/report.html
+frontend/vite.config.*.timestamp*
+frontend/*.local
+
+# 前端包管理器锁文件 (保留 pnpm-lock.yaml，忽略其他)
+frontend/yarn.lock
+frontend/package-lock.json
+frontend/npm-debug.log*
+frontend/.pnpm-error.log*
+frontend/.pnpm-debug.log*
+frontend/tests/**/coverage/
+
+# 后端依赖和缓存
+backend/__pycache__/
+backend/*.py[cod]
+backend/*$py.class
+backend/app.egg-info/
+backend/.mypy_cache/
+backend/.coverage
+backend/htmlcov/
+backend/.cache/
+backend/.venv/
+backend/.ruff_cache/
+backend/instance/
+backend/.webassets-cache
+
+# 环境变量和配置文件
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+backend/.env
+frontend/.env.production
+frontend/.env.staging
+
+# 日志文件
+*.log
+logs/
+logs/*.log
+
+# 数据库文件
+*.db
+*.sqlite
+*.sqlite3
+
+# 测试临时文件
+.coverage
+.pytest_cache/
+.tox/
+coverage.xml
+*.cover
+.hypothesis/
+
+# 文档构建
+docs/_build/
+site/
+
+# 备份文件
+*.bak
+*.backup
+*.tmp
+
+# 临时文件
+*.temp
+*.swp
+*.swo
+*~
+
+# 构建和部署相关
+*.tar.gz
+*.zip
+#build/
+dist/
+
+# Docker 相关
+docker-compose.override.yml
+.dockerignore
+
+# 其他
+*.pid
+*.seed
+*.pid.lock
+.lock-wscript
