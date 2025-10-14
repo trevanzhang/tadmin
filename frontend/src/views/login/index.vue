@@ -74,6 +74,33 @@ const onLogin = async (formEl: FormInstance | undefined) => {
             message(t("login.pureLoginFail"), { type: "error" });
           }
         })
+        .catch(error => {
+          console.error("Login error:", error);
+          // 根据错误类型显示不同的错误消息
+          let errorMessage = t("login.pureLoginFail");
+
+          if (error.response) {
+            // 服务器响应错误
+            const status = error.response.status;
+            if (status === 401) {
+              errorMessage = "用户名或密码错误";
+            } else if (status === 403) {
+              errorMessage = "账户被禁用，请联系管理员";
+            } else if (status >= 500) {
+              errorMessage = "服务器错误，请稍后重试";
+            } else {
+              errorMessage = error.response.data?.detail || "登录失败，请检查输入";
+            }
+          } else if (error.request) {
+            // 网络错误
+            errorMessage = "网络连接失败，请检查网络设置";
+          } else {
+            // 其他错误
+            errorMessage = "登录失败，请重试";
+          }
+
+          message(errorMessage, { type: "error" });
+        })
         .finally(() => (loading.value = false));
     }
   });
