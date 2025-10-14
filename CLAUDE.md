@@ -75,6 +75,12 @@ pnpm dev                   # 开发服务器
 pnpm build                 # 生产构建
 pnpm lint                  # 代码检查和格式化
 pnpm typecheck             # 类型检查
+
+# Playwright E2E测试
+pnpm test:e2e              # 运行E2E测试
+pnpm test:e2e:ui           # UI模式测试
+pnpm test:e2e:debug        # 调试模式测试
+pnpm test:e2e:codegen      # 代码生成器
 ```
 
 ## 项目结构
@@ -100,6 +106,8 @@ tadmin/
 │   │   ├── store/          # Pinia 状态管理
 │   │   ├── views/          # 页面组件
 │   │   └── services/       # 服务层
+│   ├── tests/              # Playwright E2E测试
+│   ├── playwright.config.ts # Playwright配置
 │   └── package.json        # 前端配置
 ├── scripts/                # 运维脚本（必须使用）
 ├── docs/                   # 项目文档
@@ -197,6 +205,8 @@ cp .env.example .env
 3. **严格质量控制**: 多层代码检查
 4. **脚本化运维**: 必须使用 scripts/ 目录脚本
 5. **现代化架构**: 最新技术栈和最佳实践
+6. **E2E测试支持**: 集成Playwright自动化测试
+7. **调试友好**: 支持MCP Playwright实时调试
 
 ## 重要提醒
 
@@ -206,4 +216,30 @@ cp .env.example .env
 - 遵循代码文件行数限制（动态语言 300 行，静态语言 400 行）
 - 注意代码架构的优雅性，避免"坏味道"模式
 
+## 调试指南
+
+### MCP Playwright调试
+项目集成了MCP Playwright调试工具，支持实时浏览器调试：
+
+```bash
+# 启动前端服务
+./scripts/start-frontend.sh
+
+# 使用MCP Playwright调试
+mcp__playwright__browser_navigate "http://localhost:8848"
+mcp__playwright__browser_snapshot
+mcp__playwright__browser_click "元素描述" "ref引用"
+```
+
+### 常见问题调试
+1. **Token刷新错误**: 检查frontend/src/utils/http/index.ts中refresh_token参数传递
+2. **UI视口问题**: 使用JavaScript直接操作DOM元素绕过视口限制
+3. **网络请求监控**: 使用mcp__playwright__browser_network_requests查看API调用
+
 *基于项目现有 CLAUDE.md 和 README 文件整合更新*
+- 文档更新制度
+必须立即更新的情况
+Git commit - 处理完成后立即记录到CHANGELOG.md
+系统架构调整 - 结构调整后更新CLAUDE.md和CHANGELOG.md
+新增Commands - 新Command创建后添加到CLAUDE.md
+重要配置变更 - 任何核心配置修改都要记录
