@@ -1,0 +1,231 @@
+{
+  "project_info": {
+    "name": "Tadmin",
+    "summary": "Tadmin - 基于现代技术栈的全栈管理系统（全栈开发脚手架）",
+    "type": "fullstack_application",
+    "scan_timestamp": "2025-11-09T22:13:52+08:00",
+    "last_updated": "2025-11-09T22:13:52+08:00"
+  },
+  "scan_statistics": {
+    "total_files_scanned": 156,
+    "total_directories": 28,
+    "coverage_percentage": 87.5,
+    "ignored_files_count": 23,
+    "truncated": false
+  },
+  "modules": [
+    {
+      "path": "backend",
+      "type": "python_service",
+      "language": "Python",
+      "description": "FastAPI后端服务，提供RESTful API和用户认证",
+      "entry_file": "app/main.py",
+      "config_file": "pyproject.toml",
+      "test_coverage": "unit_tests",
+      "api_endpoints": 8,
+      "data_models": 5,
+      "coverage": {
+        "files_scanned": 23,
+        "total_files": 25,
+        "percentage": 92.0
+      }
+    },
+    {
+      "path": "frontend",
+      "type": "vue_application",
+      "language": "TypeScript",
+      "description": "Vue3前端界面，提供管理后台功能",
+      "entry_file": "src/main.ts",
+      "config_file": "package.json",
+      "test_coverage": "playwright_e2e",
+      "components": 45,
+      "views": 8,
+      "coverage": {
+        "files_scanned": 89,
+        "total_files": 95,
+        "percentage": 93.7
+      }
+    },
+    {
+      "path": "scripts",
+      "type": "shell_scripts",
+      "language": "Shell",
+      "description": "运维脚本，提供系统启动和管理功能",
+      "entry_file": "start-all.sh",
+      "config_file": null,
+      "test_coverage": "manual",
+      "scripts_count": 5,
+      "coverage": {
+        "files_scanned": 5,
+        "total_files": 5,
+        "percentage": 100.0
+      }
+    },
+    {
+      "path": "docs",
+      "type": "documentation",
+      "language": "Markdown",
+      "description": "项目文档，包含开发指南和API文档",
+      "entry_file": "README.md",
+      "config_file": null,
+      "test_coverage": "none",
+      "documents_count": 6,
+      "coverage": {
+        "files_scanned": 6,
+        "total_files": 6,
+        "percentage": 100.0
+      }
+    }
+  ],
+  "key_technologies": {
+    "backend": {
+      "framework": "FastAPI",
+      "language": "Python 3.10+",
+      "database": "SQLite/PostgreSQL",
+      "orm": "SQLModel",
+      "auth": "JWT",
+      "migration": "Alembic",
+      "package_manager": "uv"
+    },
+    "frontend": {
+      "framework": "Vue 3.5+",
+      "language": "TypeScript 5.8+",
+      "ui_library": "Element Plus",
+      "build_tool": "Vite 7.0+",
+      "state_management": "Pinia",
+      "router": "Vue Router",
+      "styling": "Tailwind CSS",
+      "package_manager": "pnpm",
+      "e2e_testing": "Playwright"
+    }
+  },
+  "coverage_details": {
+    "file_types": {
+      "python": 23,
+      "typescript": 58,
+      "vue": 47,
+      "shell": 5,
+      "markdown": 6,
+      "json": 4,
+      "toml": 1,
+      "javascript": 8,
+      "other": 4
+    },
+    "gaps": [
+      {
+        "area": "backend_unit_tests",
+        "description": "后端单元测试文件缺失",
+        "priority": "medium",
+        "files_needed": ["test_auth.py", "test_users.py", "test_crud.py"]
+      },
+      {
+        "area": "frontend_component_tests",
+        "description": "前端组件单元测试不完整",
+        "priority": "low",
+        "files_needed": ["components/*/*.spec.ts"]
+      },
+      {
+        "area": "api_documentation",
+        "description": "API文档需要更详细的说明",
+        "priority": "low",
+        "files_needed": ["docs/api_detailed.md"]
+      }
+    ],
+    "ignored_patterns": [
+      "node_modules/**",
+      ".git/**",
+      "dist/**",
+      "build/**",
+      "__pycache__/**",
+      "*.log",
+      "*.db",
+      "*.sqlite",
+      ".venv/**"
+    ]
+  },
+  "documentation_status": {
+    "root_claude_md": {
+      "file": "/home/trevan/projects/tadmin/CLAUDE.md",
+      "status": "updated",
+      "last_modified": "2025-11-09T22:13:52+08:00",
+      "includes_mermaid": true,
+      "includes_navigation": true
+    },
+    "module_documentation": [
+      {
+        "module": "backend",
+        "file": "/home/trevan/projects/tadmin/backend/CLAUDE.md",
+        "status": "created",
+        "has_breadcrumb": true,
+        "coverage": "detailed"
+      },
+      {
+        "module": "frontend",
+        "file": "/home/trevan/projects/tadmin/frontend/CLAUDE.md",
+        "status": "created",
+        "has_breadcrumb": true,
+        "coverage": "detailed"
+      },
+      {
+        "module": "scripts",
+        "file": "/home/trevan/projects/tadmin/scripts/CLAUDE.md",
+        "status": "created",
+        "has_breadcrumb": true,
+        "coverage": "detailed"
+      },
+      {
+        "module": "docs",
+        "file": "/home/trevan/projects/tadmin/docs/CLAUDE.md",
+        "status": "created",
+        "has_breadcrumb": true,
+        "coverage": "detailed"
+      }
+    ]
+  },
+  "next_steps": [
+    {
+      "priority": "high",
+      "action": "add_backend_unit_tests",
+      "description": "为后端API添加单元测试",
+      "target_files": ["backend/test_*.py"],
+      "estimated_effort": "medium"
+    },
+    {
+      "priority": "medium",
+      "action": "enhance_api_docs",
+      "description": "完善API接口文档",
+      "target_files": ["docs/api_detailed.md"],
+      "estimated_effort": "low"
+    },
+    {
+      "priority": "low",
+      "action": "add_component_tests",
+      "description": "为前端组件添加单元测试",
+      "target_files": ["frontend/src/components/**/*.spec.ts"],
+      "estimated_effort": "high"
+    }
+  ],
+  "quality_metrics": {
+    "code_structure": "excellent",
+    "documentation_coverage": 92.5,
+    "modular_design": "excellent",
+    "testing_coverage": "adequate",
+    "configuration_management": "excellent",
+    "developer_experience": "excellent"
+  },
+  "architecture_assessment": {
+    "strengths": [
+      "清晰的模块分离",
+      "现代化的技术栈",
+      "完整的开发工具链",
+      "良好的文档结构",
+      "统一的代码规范"
+    ],
+    "recommendations": [
+      "增加单元测试覆盖率",
+      "完善API文档",
+      "考虑添加CI/CD流程",
+      "增强错误处理机制"
+    ]
+  }
+}

@@ -2,9 +2,72 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## 变更记录 (Changelog)
+
+### 2025-11-09 22:13:52 - 自适应初始化架构师系统
+- 执行全仓扫描和模块识别
+- 生成Mermaid架构图和模块导航
+- 创建模块级CLAUDE.md文档
+- 建立覆盖率度量和续跑机制
+
 ## 项目概述
 
 **Tadmin** 是一个基于现代技术栈构建的全栈管理系统（全栈开发脚手架），采用前后端分离架构，提供完整的用户认证、权限管理和数据管理功能。该项目非常适合用作开发其他应用的模版，开箱即用。
+
+## 架构总览
+
+### 模块结构图
+
+```mermaid
+graph TD
+    A["(根) Tadmin 全栈管理系统"] --> B["backend"];
+    A --> C["frontend"];
+    A --> D["scripts"];
+    A --> E["docs"];
+
+    B --> F["app"];
+    F --> G["api"];
+    G --> H["auth.py"];
+    G --> I["users.py"];
+    G --> J["routes.py"];
+    G --> K["deps.py"];
+    F --> L["core"];
+    L --> M["config.py"];
+    L --> N["database.py"];
+    L --> O["security.py"];
+    L --> P["exceptions.py"];
+    F --> Q["models.py"];
+    F --> R["crud.py"];
+    F --> S["alembic"];
+    S --> T["versions"];
+
+    C --> U["src"];
+    U --> V["api"];
+    V --> W["user.ts"];
+    V --> X["routes.ts"];
+    U --> Y["components"];
+    U --> Z["layout"];
+    Z --> AA["index.vue"];
+    U --> BB["store"];
+    BB --> CC["modules"];
+    CC --> DD["user.ts"];
+    U --> EE["router"];
+    EE --> FF["index.ts"];
+    U --> GG["views"];
+    C --> HH["tests"];
+    C --> II["build"];
+
+    D --> JJ["start-all.sh"];
+    D --> KK["start-backend.sh"];
+    D --> LL["start-frontend.sh"];
+    D --> MM["init-database.sh"];
+    D --> NN["test-api.sh"];
+
+    click B "./backend/CLAUDE.md" "查看 backend 模块文档"
+    click C "./frontend/CLAUDE.md" "查看 frontend 模块文档"
+    click D "./scripts/CLAUDE.md" "查看 scripts 模块文档"
+    click E "./docs/CLAUDE.md" "查看 docs 模块文档"
+```
 
 ## 技术栈
 
@@ -14,7 +77,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **语言**: Python 3.10+
 - **数据库**: SQLite (开发) / PostgreSQL (生产)
 - **ORM**: SQLModel
-- **认证**: JWT
+- **认证**: JWT (Access Token + Refresh Token)
 - **迁移**: Alembic
 - **包管理**: uv
 
@@ -27,8 +90,18 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **路由**: Vue Router 4.5+
 - **样式**: Tailwind CSS 4.1+
 - **包管理**: pnpm
+- **E2E测试**: Playwright
 
-## 常用开发命令
+## 模块索引
+
+| 模块路径 | 语言 | 主要职责 | 入口文件 | 测试覆盖 | 配置文件 |
+|---------|------|----------|----------|----------|----------|
+| [backend](./backend/CLAUDE.md) | Python | FastAPI后端服务 | `app/main.py` | 单元测试 | `pyproject.toml` |
+| [frontend](./frontend/CLAUDE.md) | TypeScript | Vue3前端界面 | `src/main.ts` | Playwright E2E | `package.json` |
+| [scripts](./scripts/CLAUDE.md) | Shell | 运维脚本 | `start-all.sh` | - | - |
+| [docs](./docs/CLAUDE.md) | Markdown | 项目文档 | `README.md` | - | - |
+
+## 运行与开发
 
 ### 使用项目脚本（推荐）
 
@@ -83,120 +156,63 @@ pnpm test:e2e:debug        # 调试模式测试
 pnpm test:e2e:codegen      # 代码生成器
 ```
 
-## 项目结构
+## 测试策略
 
-```
-tadmin/
-├── backend/                 # FastAPI 后端
-│   ├── app/
-│   │   ├── api/            # API 路由
-│   │   ├── core/           # 核心配置
-│   │   ├── models.py       # SQLModel 数据模型
-│   │   ├── crud.py         # CRUD 操作
-│   │   ├── services/       # 业务逻辑
-│   │   ├── alembic/        # 数据库迁移
-│   │   └── main.py         # 应用入口
-│   └── pyproject.toml      # Python 配置
-├── frontend/               # Vue 3 前端
-│   ├── src/
-│   │   ├── api/            # API 调用
-│   │   ├── components/     # 公共组件
-│   │   ├── layout/         # 布局组件
-│   │   ├── router/         # 路由配置
-│   │   ├── store/          # Pinia 状态管理
-│   │   ├── views/          # 页面组件
-│   │   └── services/       # 服务层
-│   ├── tests/              # Playwright E2E测试
-│   ├── playwright.config.ts # Playwright配置
-│   └── package.json        # 前端配置
-├── scripts/                # 运维脚本（必须使用）
-├── docs/                   # 项目文档
-└── .kilocode/             # Kilocode 配置
-```
+### 后端测试
+- **单元测试**: 使用 pytest 进行业务逻辑测试
+- **API测试**: 使用 httpx 进行接口测试
+- **数据库测试**: 使用 SQLite 内存数据库
 
-## 数据库工作流程
+### 前端测试
+- **E2E测试**: 使用 Playwright 进行端到端测试
+- **测试环境**: `http://localhost:8848`
+- **测试覆盖**: 登录、用户管理、权限控制等核心功能
 
-### 智能环境配置
+## 编码规范
 
-- 开发环境自动使用 SQLite
-- 生产环境使用 PostgreSQL
-- 环境变量配置在 `.env` 文件
+### Python后端规范
+- **代码检查**: Ruff (替代 pylint + black)
+- **类型检查**: MyPy (严格模式)
+- **代码风格**: 遵循 PEP 8，行数限制 300 行
+- **文档字符串**: 使用 Google 风格
 
-### 迁移流程
+### TypeScript前端规范
+- **代码检查**: ESLint + Prettier
+- **样式检查**: Stylelint
+- **类型安全**: 严格 TypeScript 模式
+- **代码规范**: Vue 3 Composition API 优先
 
-```bash
-# 1. 修改数据模型 (backend/app/models.py)
+## AI 使用指引
 
-# 2. 生成迁移
-cd backend
-uv run alembic revision --autogenerate -m "变更描述"
+### 开发建议
+1. **优先阅读模块文档**: 在修改代码前，先查看对应模块的 CLAUDE.md
+2. **遵循脚本约定**: 所有启停操作必须使用 scripts/ 目录脚本
+3. **保持类型安全**: 前端强类型，后端使用 SQLModel 类型约束
+4. **测试驱动**: 新功能需要包含相应的测试用例
 
-# 3. 检查迁移文件 (backend/app/alembic/versions/xxx.py)
-
-# 4. 应用迁移
-uv run alembic upgrade head
-```
-
-## 开发工作流程
-
-### 环境准备
-
-```bash
-# 1. 克隆项目
-git clone <repository-url>
-cd tadmin
-
-# 2. 配置环境变量
-cp .env.example .env
-# 编辑 .env 文件
-
-# 3. 初始化数据库
-./scripts/init-database.sh
-```
-
-### 开发启动
-
-```bash
-# 启动完整系统
-./scripts/start-all.sh
-
-# 访问地址
-# 前端: http://localhost:8848
-# 后端 API 文档: http://localhost:8000/docs
-```
-
-## 代码质量规范
-
-### 工具链
-
-- **Python**: Ruff (检查 + 格式化)
-- **TypeScript**: ESLint, Prettier, Stylelint
-- **Git Hooks**: Pre-commit 检查
-
-### 提交规范
-
-采用约定式提交：
-
-- `feat`: 新功能
-- `fix`: 修复
-- `docs`: 文档
-- `style`: 格式调整
-- `refactor`: 重构
-- `test`: 测试
+### 调试技巧
+- **后端调试**: 检查 `/docs` 接口文档和日志输出
+- **前端调试**: 使用 MCP Playwright 实时浏览器调试
+- **数据库调试**: 查看 Alembic 迁移文件和 SQLite 数据库
 
 ## 默认配置
 
 ### 管理员账号
-
 - **邮箱**: admin@example.com
 - **用户名**: admin
 - **密码**: admin123
 
 ### 服务地址
-
 - **前端**: http://localhost:8848
 - **后端 API**: http://localhost:8000
 - **API 文档**: http://localhost:8000/docs
+
+### 环境变量
+```bash
+DATABASE_TYPE=sqlite          # 数据库类型: sqlite/postgresql
+SECRET_KEY=your-secret-key    # JWT密钥
+ACCESS_TOKEN_EXPIRE_MINUTES=30  # 访问令牌过期时间
+```
 
 ## 项目特性
 
