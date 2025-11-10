@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.api import auth, routes, users
+from app.api import auth, routes, users, roles
 from app.core.config import settings
 from app.core.database import create_db_and_tables
 from app.core.exceptions import TAdminException
@@ -45,6 +45,7 @@ app.add_exception_handler(Exception, GlobalExceptionHandler.general_exception_ha
 # 包含路由
 app.include_router(auth.router, prefix="/api/v1/auth", tags=["认证"])
 app.include_router(users.router, prefix="/api/v1/users", tags=["用户"])
+app.include_router(roles.router, prefix="/api/v1/roles", tags=["角色"])
 app.include_router(routes.router, prefix="/api/v1", tags=["路由"])
 
 
