@@ -67,6 +67,9 @@ menus:
   pureFourZeroFour: "404"
   pureFourZeroOne: "403"
   pureFive: "500"
+  userManagement: 用户管理
+  userList: 用户列表
+  roleList: 角色管理
   purePermission: 权限管理
   purePermissionPage: 页面权限
   purePermissionButton: 按钮权限
