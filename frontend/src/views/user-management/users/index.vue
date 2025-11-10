@@ -107,7 +107,7 @@
             {{ formatDateTime(row.created_at) }}
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="200" fixed="right">
+        <el-table-column label="操作" width="280" fixed="right">
           <template #default="{ row }">
             <el-button
               link
@@ -116,6 +116,15 @@
               @click="handleEdit(row)"
             >
               编辑
+            </el-button>
+            <el-button
+              link
+              type="info"
+              size="small"
+              @click="handleResetPassword(row)"
+              v-if="row.id !== userStore.userInfo?.userId"
+            >
+              重置密码
             </el-button>
             <el-button
               link
@@ -167,7 +176,7 @@
 import { ref, reactive, onMounted } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { Plus } from '@element-plus/icons-vue'
-import { getUserList, deleteUser, updateUser, getRoleList, type User, type Role } from '@/api/user'
+import { getUserList, deleteUser, updateUser, getRoleList, resetUserPassword, type User, type Role } from '@/api/user'
 import UserFormDialog from './components/UserFormDialog.vue'
 import { formatDateTime } from '@/utils/formatTime'
 import { useUserStore } from '@/store/modules/user'
@@ -215,8 +224,8 @@ const fetchUserList = async () => {
 
     const response = await getUserList(params)
     userList.value = response.data || []
-    // 注意：实际项目中后端应该返回总数，这里先用列表长度模拟
-    pagination.total = userList.value.length
+    // 使用后端返回的总数
+    pagination.total = response.total || 0
   } catch (error) {
     console.error('获取用户列表失败:', error)
     ElMessage.error('获取用户列表失败')
@@ -318,6 +327,38 @@ const handleToggleStatus = async (user: User) => {
       const action = user.is_active ? '禁用' : '启用'
       console.error(`${action}用户失败:`, error)
       ElMessage.error(`${action}用户失败`)
+    }
+  }
+}
+
+// 重置用户密码
+const handleResetPassword = async (user: User) => {
+  try {
+    await ElMessageBox.confirm(
+      `确定要重置用户 "${user.username}" 的密码吗？系统将生成一个新的随机密码。`,
+      '确认重置密码',
+      {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }
+    )
+
+    const response = await resetUserPassword(user.id)
+
+    await ElMessageBox.alert(
+      `用户 "${user.username}" 的密码已重置为：<br><strong style="color: #E6A23C; font-size: 16px;">${response.new_password}</strong><br><br>请将此密码安全地告知用户。`,
+      '密码重置成功',
+      {
+        confirmButtonText: '我已记录',
+        dangerouslyUseHTMLString: true,
+        type: 'success'
+      }
+    )
+  } catch (error) {
+    if ((error as any) !== 'cancel') {
+      console.error('重置密码失败:', error)
+      ElMessage.error('重置密码失败')
     }
   }
 }

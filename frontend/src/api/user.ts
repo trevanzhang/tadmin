@@ -110,7 +110,7 @@ export const refreshTokenApi = (data?: object) => {
 
 /** 获取用户列表 */
 export const getUserList = (params?: UserListParams) => {
-  return http.request<{ data: User[] }>("get", "/users/", { params });
+  return http.request<{ data: User[]; total: number; skip: number; limit: number }>("get", "/users/", { params });
 };
 
 /** 创建用户 */
@@ -133,9 +133,14 @@ export const deleteUser = (id: number) => {
   return http.request("delete", `/users/${id}`);
 };
 
+/** 重置用户密码 */
+export const resetUserPassword = (id: number) => {
+  return http.request<{ message: string; new_password: string }>("post", `/users/${id}/reset-password`);
+};
+
 /** 获取角色列表 */
 export const getRoleList = (params?: { skip?: number; limit?: number; search?: string; is_active?: boolean }) => {
-  return http.request<{ data: Role[] }>("get", "/roles/", { params });
+  return http.request<{ data: Role[]; total: number; skip: number; limit: number }>("get", "/roles/", { params });
 };
 
 /** 创建角色 */

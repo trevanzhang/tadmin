@@ -15,7 +15,7 @@ export default {
     {
       path: "/user-management/users",
       name: "UserList",
-      component: () => import("@/views/user-management/simple-users.vue"),
+      component: () => import("@/views/user-management/users/index.vue"),
       meta: {
         title: $t("menus.userList"),
         roles: ["admin", "super_admin", "user"]
