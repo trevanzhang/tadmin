@@ -2,22 +2,21 @@
 
 echo "启动后端服务..."
 
+# 切换到backend目录
+cd "$(dirname "$0")/../backend"
+
 # 检查是否存在虚拟环境
-if [ ! -d "backend/.venv" ]; then
+if [ ! -d ".venv" ]; then
     echo "虚拟环境不存在，正在创建..."
-    cd backend
     uv sync
-    cd ..
 fi
 
 # 激活虚拟环境并启动服务
-cd backend
 source .venv/bin/activate 2>/dev/null || source .venv/Scripts/activate
 
 # 检查环境变量文件
-if [ ! -f "../.env" ]; then
-    echo "错误: .env 文件不存在，请先创建环境配置文件"
-    exit 1
+if [ ! -f ".env" ]; then
+    echo "警告: .env 文件不存在，将使用默认配置"
 fi
 
 # 检查数据库配置
@@ -36,4 +35,4 @@ else
 fi
 
 echo "启动 FastAPI 服务..."
-uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+exec uvicorn app.main:app --reload --host 0.0.0.0 --port 8000

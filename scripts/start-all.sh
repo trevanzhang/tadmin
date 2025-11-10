@@ -4,9 +4,8 @@ echo "启动 tadmin 管理系统..."
 
 # 检查环境变量文件
 if [ ! -f ".env" ]; then
-    echo "错误: .env 文件不存在，请先创建环境配置文件"
-    echo "参考 docs/环境配置说明.md 创建配置文件"
-    exit 1
+    echo "警告: .env 文件不存在，将使用默认配置"
+    echo "如需自定义配置，请创建 .env 文件"
 fi
 
 # 启动后端服务

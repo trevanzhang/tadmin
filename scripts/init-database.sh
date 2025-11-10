@@ -2,22 +2,21 @@
 
 echo "初始化数据库..."
 
+# 切换到backend目录
+cd "$(dirname "$0")/../backend"
+
 # 检查环境变量文件
 if [ ! -f ".env" ]; then
-    echo "错误: .env 文件不存在，请先创建环境配置文件"
-    exit 1
+    echo "警告: .env 文件不存在，将使用默认配置"
 fi
 
 # 检查虚拟环境
-if [ ! -d "backend/.venv" ]; then
+if [ ! -d ".venv" ]; then
     echo "虚拟环境不存在，正在创建..."
-    cd backend
     uv sync
-    cd ..
 fi
 
 # 激活虚拟环境
-cd backend
 source .venv/bin/activate 2>/dev/null || source .venv/Scripts/activate
 
 # 检查数据库类型

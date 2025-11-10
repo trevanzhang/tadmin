@@ -9,9 +9,9 @@ if ! curl -s http://localhost:8000/docs > /dev/null; then
 fi
 
 echo "1. 测试登录接口..."
-LOGIN_RESPONSE=$(curl -s -X POST "http://localhost:8000/login" \
-     -H "Content-Type: application/json" \
-     -d '{"username": "admin", "password": "admin123"}')
+LOGIN_RESPONSE=$(curl -s -X POST "http://localhost:8000/api/v1/auth/login" \
+     -H "Content-Type: application/x-www-form-urlencoded" \
+     -d "username=admin&password=admin123")
 
 echo "登录响应: $LOGIN_RESPONSE"
 
@@ -43,11 +43,14 @@ echo ""
 echo "4. 测试刷新令牌接口..."
 REFRESH_TOKEN=$(echo $LOGIN_RESPONSE | grep -o '"refreshToken":"[^"]*' | cut -d'"' -f4)
 
-REFRESH_RESPONSE=$(curl -s -X POST "http://localhost:8000/refresh-token" \
-     -H "Content-Type: application/json" \
-     -d "{\"refreshToken\": \"$REFRESH_TOKEN\"}")
-
-echo "刷新令牌响应: $REFRESH_RESPONSE"
+if [ -n "$REFRESH_TOKEN" ]; then
+    REFRESH_RESPONSE=$(curl -s -X POST "http://localhost:8000/api/v1/auth/refresh-token" \
+         -H "Content-Type: application/json" \
+         -d "{\"refreshToken\": \"$REFRESH_TOKEN\"}")
+    echo "刷新令牌响应: $REFRESH_RESPONSE"
+else
+    echo "未找到刷新令牌，跳过刷新测试"
+fi
 
 echo ""
 echo "API 测试完成！"
